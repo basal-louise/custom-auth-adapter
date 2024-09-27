@@ -1,0 +1,22 @@
+{
+  "name": "nbc-custom-auth-adapter",
+  "version": "1.0.0",
+  "description": "Nodeblocks Auth Service Custom Adapter for NBC",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "tsc",
+    "start": "nbc adapter start",
+    "dev": "nbc adapter dev -i dist -e tsc"
+  },
+  "author": "Basal Inc.",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@basaldev/blocks-auth-service": "^4.3.1",
+    "@basaldev/blocks-backend-sdk": "^3.3.0"
+  },
+  "devDependencies": {
+    "@basaldev/nodeblocks-cloud-sdk": "^0.4.0",
+    "typescript": "^5.4.5"
+  }
+}
