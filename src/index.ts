@@ -1,6 +1,16 @@
 import * as sdk from "@basaldev/blocks-backend-sdk";
 import { defaultAdapter, AuthAppConfig, ServiceOptsWithOAuth } from "@basaldev/blocks-auth-service";
 
+export interface AuthAdapterHandlerResponse extends sdk.adapter.AdapterHandlerResponse {
+  data: {
+    userId: string;
+  }
+}
+
+export interface DecryptedUserAccessTokenInfo extends sdk.crypto.UserAccessTokenInfo {
+  exp: number;
+}
+
 /**
  * A hook function called after the adapter is created
  * This hook can be used to customize the adapter instance
@@ -16,18 +26,18 @@ export function adapterCreated(adapter: defaultAdapter.AuthDefaultAdapter): defa
 
   const updatedAdapter = sdk.adapter.modifyHandler(adapter, 'checkToken', (oldHandler) => {
     const newHandler = async (logger: sdk.Logger, context: sdk.adapter.AdapterHandlerContext) => {
-      const user = await oldHandler(logger, context);
+      const user = await oldHandler(logger, context) as AuthAdapterHandlerResponse;
       const authSecrets = { 
                             authEncSecret: process.env.ADAPTER_AUTH_ENC_SECRET, 
                             authSignSecret: process.env.ADAPTER_AUTH_SIGN_SECRET 
                           };
       const token = context.body.token;
-      const decrypted = sdk.crypto.decryptAndVerifyJWT(authSecrets, token)
+      const decrypted = sdk.crypto.decryptAndVerifyJWT(authSecrets, token) as DecryptedUserAccessTokenInfo
       return {
         ...user,
         data: {
-          userId: (user.data as { userId: string }).userId,
-          exp: (decrypted as any).exp,
+          userId: user.data.userId,
+          exp: decrypted.exp,
         }
       };
     };
