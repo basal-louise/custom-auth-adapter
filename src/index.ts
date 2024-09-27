@@ -1,5 +1,5 @@
 import * as sdk from "@basaldev/blocks-backend-sdk";
-import { defaultAdapter, AuthAppConfig, ServiceOptsWithOAuth } from "@basaldev/blocks-auth-service";
+import { defaultAdapter } from "@basaldev/blocks-auth-service";
 
 export interface AuthAdapterHandlerResponse extends sdk.adapter.AdapterHandlerResponse {
   data: {
