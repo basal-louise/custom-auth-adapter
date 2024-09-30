@@ -43,5 +43,9 @@ export function adapterCreated(adapter: defaultAdapter.AuthDefaultAdapter): defa
     };
     return newHandler
   });
+  adapter = sdk.adapter.addHandlerSideEffect(adapter, 'checkToken', async (logger, context, response) => {
+    const newResponse = {...response, test: "test from inside the addHandlerSideEffect"}
+    return newResponse;
+  });
   return updatedAdapter;
 }
