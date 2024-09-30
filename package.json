@@ -1,5 +1,5 @@
 {
-  "name": "nbc-custom-auth-adapter",
+  "name": "custom-auth-adapter",
   "version": "1.0.0",
   "description": "Nodeblocks Auth Service Custom Adapter for NBC",
   "main": "dist/index.js",
